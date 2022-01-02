@@ -1,11 +1,11 @@
-# twitch-airtable-chatwatch
+# twitch-oracle-chatwatch
 
 ## Overview
 This app will login to a specific Twitch.tv channel and watch for users entering the `!play` command in chat.
 
-Each user that enters this command will be added to an AirTable that can be used to provide auto-completion of Twitch usernames.
+Each user that enters this command will be added to an Oracle Database that can be used to create player records and provide auto-completion of Twitch usernames.
 
-Data will be batched up and pushed into AirTable on a configurable interval (default: 5 seconds).  If there is more than one player that entered `!play` during the interval, the data will be inserted as a single row with multiple comma-separated usernames.
+Data will be batched up and pushed into the database on a configurable interval (default: 5 seconds).  If there is more than one player that entered `!play` during the interval, the data will be inserted as a single row with multiple comma-separated usernames.
 
 ## Installation
 ### Windows
@@ -18,7 +18,7 @@ Data will be batched up and pushed into AirTable on a configurable interval (def
 	* This just runs `C:\Program Files\nodejs\nodevars.bat` assuming default install location was selected for NodeJS
 4.	Navigate in the command prompt to the folder that holds this app
 	```
-	cd "c:\users\username\downloads\twitch-airtable-chatwatch"
+	cd "c:\users\username\downloads\twitch-oracle-chatwatch"
 	```
 5.	Install the required NodeJS modules (This must be run inside the app's folder)
 	```
@@ -35,15 +35,15 @@ For subsequent launches, just run the `node bot.js` command to start the app fro
 
 #### Example startbot.bat (adjust paths to match your environment):
 ```
-cd "c:\users\username\downloads\twitch-airtable-chatwatch"
+cd "c:\users\username\downloads\twitch-oracle-chatwatch"
 "C:\Program Files\nodejs\nodevars.bat"
 node bot.js
 ```
 
 ## Compiling
 ```
-git clone http://x.x.x.x/twitch-airtable-chatwatch
-cd twitch-airtable-chatwatch
+git clone http://x.x.x.x/twitch-oracle-chatwatch
+cd twitch-oracle-chatwatch
 npm install
 npm install -g pkg
 ```

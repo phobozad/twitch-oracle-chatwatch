@@ -7,7 +7,7 @@ const chalk = require('chalk');
 // Path for finding the config file when compiled as an exe
 const path = require('path');
 // Airtable Library
-var Airtable = require('airtable');
+//var Airtable = require('airtable');
 
 
 // For pkg binary building
@@ -23,7 +23,7 @@ else
 var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
 
 // Set default value of update interval to 5 seconds if not configured in INI file
-if (!config.airtable.updateIntervalMs) config.airtable.updateIntervalMs = 5000
+if (!config.database.updateIntervalMs) config.database.updateIntervalMs = 5000
 
 // Airtable library setup
 var airtableDB = new Airtable({apiKey: config.airtable.apiKey}).base(config.airtable.baseID);
@@ -44,19 +44,19 @@ const twitchChatSettings = {
 var validEmotes = config.marbles.playEmotes.split(',').map(item=>item.trim()).filter(Boolean)
 
 console.log('App starting...use Ctrl+C to quit');
-console.log(`AirTable update interval is ${config.airtable.updateIntervalMs} milliseconds`);
+console.log(`Backend Database update interval is ${config.database.updateIntervalMs} milliseconds`);
 console.log(`Twitch Channel is ${config.twitch.channel}`);
 console.log(`Bot Username is ${config.twitch.username}`)
 
 console.log(`Emote play commands recognized (in addition to !play):`)
 validEmotes.forEach(emote => console.log(chalk.yellow(emote)))
 
-// We will buffer players in an array and only push this to Airtables every 5 seconds
+// We will buffer players in an array and only push this to the database every 5 seconds
 var batchedPlayers = [];
 
-// Setup interval for pushing the current batch of players to AirTable
+// Setup interval for pushing the current batch of players to the database
 // Use timeouts that get reset after every update to avoid overlapping/duplicate API calls if things get bogged down
-setTimeout(batchUpdate,config.airtable.updateIntervalMs);
+setTimeout(batchUpdate,config.database.updateIntervalMs);
 
 // Create a Twitch Chat client with our options
 const chatClient = new tmi.client(twitchChatSettings);
@@ -101,7 +101,7 @@ function addPlayer (player) {
 
 function batchUpdate() {
 
-	// Only need to push update to AirTables if we have some players pending in the batch queue
+	// Only need to push update to database if we have some players pending in the batch queue
 	if (batchedPlayers.length > 0)
 	{
 		// Grab a snapshot of the queue, since it may get changed while we're processing it
@@ -110,24 +110,24 @@ function batchUpdate() {
 		// Build our payload to push to the AirTables API
 		// This is an array where each item in the array is a row that will be inserted
 		// We'll batch things up into a single row where the data is a comma-seprated list of players
-		var updateData = [ { "fields": {[config.airtable.fieldName]: currentBatch.join(',')} } ];
+		var updateData = [ { "fields": {[config.database.fieldName]: currentBatch.join(',')} } ];
 
-		airtableDB(config.airtable.tableName).create(updateData, function(err, records) {
+		airtableDB(config.database.tableName).create(updateData, function(err, records) {
 			if (err) {
 				// Error
 				console.error(chalk.red(`AirTable API Error - ${err}`));
 				// Schedule next run for next batch
-				setTimeout(batchUpdate,config.airtable.updateIntervalMs);
+				setTimeout(batchUpdate,config.database.updateIntervalMs);
 				return;
 			}
 
 			// Success		
 			var recordCount = 0;
 			records.forEach(function (record) {
-				console.log(`Added ${chalk.bold(record.fields[config.airtable.fieldName])} to AirTable.`);
-				recordCount += record.fields[config.airtable.fieldName].split(',').length;
+				console.log(`Added ${chalk.bold(record.fields[config.database.fieldName])} to Database.`);
+				recordCount += record.fields[config.database.fieldName].split(',').length;
 			});
-			console.log(`Successfully added ${recordCount} players to AirTable.`);
+			console.log(`Successfully added ${recordCount} players to Database.`);
 
 			
 		});
@@ -145,7 +145,7 @@ function batchUpdate() {
 	}
 
 	// Schedule next run for next batch
-	setTimeout(batchUpdate,config.airtable.updateIntervalMs);
+	setTimeout(batchUpdate,config.database.updateIntervalMs);
 
 	return;
 }
