@@ -24,9 +24,15 @@ Data will be batched up and pushed into the database on a configurable interval 
 	```
 	npm install
 	```
-6.	Copy the `settings.ini.example` file to `settings.ini`
-7.	Edit the `settings.ini` file and fill in the required info (username, password, API key, table name, etc.)
-8.	Start the App (bot.js) using NodeJS
+6.	Install Visual Studio 2017 Redistributable if not already installed (required for Oracle Instant Client)
+	https://aka.ms/vs/17/release/vc_redist.x64.exe
+7.	Download the Oracle Instant Client (Basic Lite version) and extract into the `oracle_instant` folder
+	* Extract everything from the sub-folder in the ZIP into the `oracle_instant` folder - do not keep the folder name used in the ZIP (that includes version number)
+	https://download.oracle.com/otn_software/nt/instantclient/instantclient-basiclite-windows.zip
+	https://www.oracle.com/database/technologies/instant-client/winx64-64-downloads.html
+8.	Copy the `settings.ini.example` file to `settings.ini`
+8.	Edit the `settings.ini` file and fill in the required info (username, password, API key, table name, etc.)
+9.	Start the App (bot.js) using NodeJS
 	```
 	node bot.js
 	```

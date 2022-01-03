@@ -21,8 +21,17 @@ channel = nightattack
 ; "updateIntervalMs" - How often (in milliseconds) the player list is batched up and pushed into the Database (e.g. 5000 = 5 seconds). For API rate-limiting.
 
 [database]
-tableName = ViewersAutoComplete
-fieldName = PlayerName
+username = ADMIN
+password = P@ssw0rd1!
+host = adb.us-ashburn-1.oraclecloud.com
+port = 1522
+service_name = ga3m13m134_marbles_medium.adb.oraclecloud.com
+retry_count = 20
+retry_delay = 3
+tableName = newPlayerChurn
+playerNameField = displayName
+twitchIDField = twitchID
+subscriberTierField = subscriberTier
 updateIntervalMs = 5000
 
 [marbles]

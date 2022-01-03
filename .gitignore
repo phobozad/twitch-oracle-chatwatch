@@ -1,3 +1,8 @@
 node_modules
 build
 settings.ini
+oracle_instant
+oracle_wallet/*
+!oracle_wallet/*.txt
+package-lock.json
+instantclient-basiclite-windows*.zip
