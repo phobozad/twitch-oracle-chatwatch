@@ -1,16 +1,8 @@
 ;  Twitch Chat Settings
 ; 
 ; "channel" is the twitch channel the bot will join to listen for messages
-; 
-; Should use a dedicated bot account for this to lower risk in case of credentials/API keys become compromised.
-; 
-; For password, need to use oauth and not real password.
-; For really quick & dirty setup go to https://twitchapps.com/tmi/ while logged in with the bot twitch account.
-; After authorizing, you will end up with a string that looks like "oauth:34adf8adf3adf81341234" - use this for the password setting including the "oauth:" part
 
 [twitch]
-username = marblesbot
-password = oauth:42adf3k1341klkmkm134
 channel = nightattack
 
 

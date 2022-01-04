@@ -31,11 +31,11 @@ var config = ini.parse(fs.readFileSync(configFile, 'utf-8'))
 // Set default value of update interval to 5 seconds if not configured in INI file
 if (!config.database.updateIntervalMs) config.database.updateIntervalMs = 5000
 
-// Setup twitch settings
+// Setup twitch settings - justinfanxxxxx allows read-only chat access without a password
 const twitchChatSettings = {
 	identity: {
-		username: config.twitch.username,
-		password: config.twitch.password
+		username: justinfan420,
+		password: ""
 	},
 	channels: [
 		config.twitch.channel
